@@ -328,7 +328,7 @@
         'msvs_disabled_warnings': [4800],
         'msvs_settings': {
           'VCCLCompilerTool': {
-            'WarnAsError': 'true',
+            # 'WarnAsError': 'true',
             'Detect64BitPortabilityProblems': 'false',
           },
         },
@@ -905,7 +905,7 @@
             'EnableFunctionLevelLinking': 'true',
             'RuntimeTypeInfo': 'false',
             'WarningLevel': '4',
-            'WarnAsError': 'true',
+            # 'WarnAsError': 'true',
             'DebugInformationFormat': '3',
             'conditions': [
               [ 'msvs_multi_core_compile', {
@@ -927,6 +927,7 @@
               'usp10.lib',
               'psapi.lib',
               'dbghelp.lib',
+              'shlwapi.lib',
             ],
             'AdditionalLibraryDirectories':
               ['<(DEPTH)/third_party/platformsdk_win7/files/Lib'],

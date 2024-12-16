@@ -18,23 +18,78 @@
     {
       'target_name': 'minidump_dump',
       'type': 'executable',
-      'sources': [
-        './deps/breakpad/src/processor/minidump_dump.cc',
-      ],
       'dependencies': [
         'processor',
+      ],
+      "conditions": [
+        [ "OS!='win'", {
+          "sources": [
+            './deps/breakpad/src/processor/minidump_dump.cc',
+          ],
+        }],
+        [ "OS=='win'", {
+          "sources": [
+              './src/windows/minidump_dump.cc',
+              './src/windows/getopt.c',
+          ],
+          'include_dirs': [
+            './src/windows/',
+          ],
+        }],
       ],
     },
     {
       'target_name': 'minidump_stackwalk',
       'type': 'executable',
-      'sources': [
-        './deps/breakpad/src/processor/minidump_stackwalk.cc',
-      ],
+      # 'sources': [
+      #   './deps/breakpad/src/processor/minidump_stackwalk.cc',
+      # ],
       'dependencies': [
         'processor',
       ],
+      "conditions": [
+        [ "OS!='win'", {
+          "sources": [
+            './deps/breakpad/src/processor/minidump_stackwalk.cc',
+          ],
+        }],
+        [ "OS=='win'", {
+          "sources": [
+              './src/windows/minidump_stackwalk.cc',
+              './src/windows/getopt.c',
+              # './src/windows/path_helper.cc',
+          ],
+          'include_dirs': [
+            './src/windows/',
+          ],
+        }],
+      ],
     },
+    # {
+    #   'target_name': 'dump_syms',
+    #   'type': 'executable',
+    #   'sources': [
+    #   ],
+    #   "conditions": [
+    #     [ "OS!='win'", {
+    #       "sources": [
+    #         './deps/breakpad/src/processor/minidump_stackwalk.cc',
+    #       ],
+    #     }],
+    #     [ "OS=='win'", {
+    #       "sources": [
+    #         './deps/breakpad/src/tools/windows/dump_syms/dump_syms.cc',
+    #         # './src/windows/getopt.c',
+    #       ],
+    #       'includes': [
+    #         './common.gypi',
+    #       ],
+    #       'dependencies': [
+    #         './common_windows.gyp:common_windows_lib',
+    #       ],
+    #     }],
+    #   ],
+    # },
     {
       'target_name': 'processor',
       'type': 'static_library',
@@ -154,9 +209,17 @@
             ['OS == "win"', {
                 'copies': [
                     {
-                    'files': [ '<(PRODUCT_DIR)/bin' ],
-                    'destination': '<(PRODUCT_DIR)/bin',
-                    }
+                    'files': [ '<(PRODUCT_DIR)/minidump_dump.exe' ],
+                    'destination': '<(module_root_dir)/bin/win32-<(host_arch)',
+                    },
+                    {
+                    'files': [ '<(PRODUCT_DIR)/minidump_stackwalk.exe' ],
+                    'destination': '<(module_root_dir)/bin/win32-<(host_arch)',
+                    },
+                    {
+                    'files': [ '<(module_root_dir)/deps/breakpad/src/tools/windows/binaries/dump_syms.exe' ],
+                    'destination': '<(module_root_dir)/bin/win32-<(host_arch)',
+                    },
                 ],
             }],
             ['OS != "win"', {

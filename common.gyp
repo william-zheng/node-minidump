@@ -117,20 +117,25 @@
         }],
         [ "OS=='win'", {
           "sources": [
-            './deps/breakpad/src/common/windows/common_windows.gyp',
-            './deps/breakpad/src/common/windows/dia_util.cc',
-            './deps/breakpad/src/common/windows/dia_util.h',
+            './src/windows/path_helper.cc',
+            # './deps/breakpad/src/common/windows/common_windows.gyp',
+            # './deps/breakpad/src/common/windows/dia_util.cc',
+            # './deps/breakpad/src/common/windows/dia_util.h',
             './deps/breakpad/src/common/windows/guid_string.cc',
             './deps/breakpad/src/common/windows/guid_string.h',
             './deps/breakpad/src/common/windows/http_upload.cc',
             './deps/breakpad/src/common/windows/http_upload.h',
-            './deps/breakpad/src/common/windows/omap.cc',
-            './deps/breakpad/src/common/windows/omap.h',
+            # './deps/breakpad/src/common/windows/omap.cc',
+            # './deps/breakpad/src/common/windows/omap.h',
             './deps/breakpad/src/common/windows/omap_internal.h',
             './deps/breakpad/src/common/windows/pdb_source_line_writer.cc',
             './deps/breakpad/src/common/windows/pdb_source_line_writer.h',
             './deps/breakpad/src/common/windows/string_utils-inl.h',
             './deps/breakpad/src/common/windows/string_utils.cc',
+          ],
+          
+          'dependencies': [
+            'common_windows.gyp:dia_sdk',
           ],
         }],
         [ "OS=='linux'", {
